@@ -1,32 +1,22 @@
 pipeline {
-environment {
-dockerImage = ''
-}
     agent any
 
     stages {
-        stage('Cloning our Git') {
-            steps {
-                script {
-                    git 'https://github.com/arfeen14/cloud-native-monitoring-app.git'
-                }
-            }
+        stage('Clone repository') {               
+            checkout scm    
+        }           
+        stage('Build image') {         
+       
+            app = docker.build("arfeenalam/devops_repo")    
+            }           stage('Test image') {                       
+                app.inside {            
+                    sh 'echo "Tests passed"'        
+                            }    
         }
-        stage('Building our image') {
-            steps {
-                script {
-                    dockerImage = docker.build registry + ":$BUILD_NUMBER"
-                }
-            }
-        }
-        stage('Deploy our image') {
-            steps {
-                script {
-                    docker.withRegistry( '', '2b53d9e6-66b7-40bc-9704-8efa5bfa4cf6' ) {
-                    dockerImage.push()
-                }
-            }
+        stage('Push image') {
+            docker.withRegistry('https://registry.hub.docker.com', 'git') {                   app.push("${env.BUILD_NUMBER}")            
+            app.push("latest")        
+            }    
         }
     }
-}
 }

@@ -1,12 +1,12 @@
 pipeline {
     agent any
 
-    stage('Cloning our Git') {
-    steps {
-        git 'https://github.com/arfeen14/cloud-native-monitoring-app.git'
-    }
-}
     stages {
+        stage('Cloning our Git') {
+            steps {
+                git 'https://github.com/arfeen14/cloud-native-monitoring-app.git'
+            }
+    }
         stage('Build our image') {
             steps {
                 echo 'Hier gaan we de docker file builden: docker build .'

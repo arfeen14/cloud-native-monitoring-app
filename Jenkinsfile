@@ -1,6 +1,11 @@
 pipeline {
     agent any
 
+    stage('Cloning our Git') {
+    steps {
+        git 'https://github.com/arfeen14/cloud-native-monitoring-app.git'
+    }
+}
     stages {
         stage('Build our image') {
             steps {
@@ -9,7 +14,7 @@ pipeline {
                     dockerImage = docker.build registry + ":$BUILD_NUMBER"
                 }
             }
-        }
+        
         stage('Deploy image to hub') {
             steps {
                 echo 'niet vergeten maak een script die automatisch de nieuwe image runtg lokaal op je pc.'

@@ -1,29 +1,28 @@
 pipeline {
+environment {
+dockerImage = ''
+}
     agent any
 
     stages {
         stage('Cloning our Git') {
             steps {
-                git 'https://github.com/arfeen14/cloud-native-monitoring-app.git'
-            }
-    }
-        stage('Build our image') {
-            steps {
-                echo 'Hier gaan we de docker file builden: docker build .'
                 script {
-                    dockerImage = docker.build registry + ":$BUILD_NUMBER"
+                    git 'https://github.com/arfeen14/cloud-native-monitoring-app.git'
                 }
             }
-        
-        stage('Deploy image to hub') {
+        }
+        stage('Building our image') {
             steps {
-                echo 'niet vergeten maak een script die automatisch de nieuwe image runtg lokaal op je pc.'
+                dockerImage = docker.build registry + ":$BUILD_NUMBER"
+            }
+        }
+        stage('Deploy our image') {
+            steps {
                 script {
-                docker.withRegistry( '', registryCredential ) {
-                dockerImage.push()
-                    }
+                    docker.withRegistry( '', '2b53d9e6-66b7-40bc-9704-8efa5bfa4cf6' ) {
+                    dockerImage.push()
                 }
-              }    
             }
         }
     }

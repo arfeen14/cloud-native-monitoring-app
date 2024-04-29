@@ -12,7 +12,8 @@ pipeline {
         stage('Build image') {         
             steps {
                 script {
-                    def app = docker.build("2b53d9e6-66b7-40bc-9704-8efa5bfa4cf6/monitoring")
+                    sh  'docker build -t 2b53d9e6-66b7-40bc-9704-8efa5bfa4cf6/monitoring .'
+
                 }
             }
         }           

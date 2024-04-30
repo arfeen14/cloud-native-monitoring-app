@@ -17,7 +17,7 @@ pipeline {
         stage('Build image') {         
             steps {
                 script {
-                    sh  'docker build -t dockerhub_credentials/monitoring .'
+                    sh  'docker build -t $DOCKER_ID/devops_repo:latest .'
 
                 }
             }

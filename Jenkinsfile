@@ -1,6 +1,11 @@
 pipeline {
     agent any
     
+    environment {
+        DOCKER_ID = credentials('dockerhub_id')
+        DOCKER_PASSWORD = credentials('dockerhub_credentials')
+    }
+
     stages {
         stage('Clone repository') {               
             steps {
@@ -20,9 +25,10 @@ pipeline {
         stage('Push image') {
             steps {
                 script {
-                    docker.withRegistry('https://registry.hub.docker.com', 'git') {
-                        app.push("${env.BUILD_NUMBER}")            
-                        app.push("latest")        
+                        echo 'hier loggen we eerts in met de dockerHub credentials'
+                        sh 'echo $DOCKER_PASSWORD | docker login -u $DOCKER_ID --password-stdin'
+                        echo 'hier pushen we het naar de juiste dockerhub repository met een tag(zoals in de docu beschreven)'
+                        sh 'docker push arfeenalam/devops_repo:latest'    
                     }
                 }
             }

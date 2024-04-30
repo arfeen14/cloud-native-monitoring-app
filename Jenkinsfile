@@ -28,6 +28,7 @@ pipeline {
                         echo 'hier loggen we eerts in met de dockerHub credentials'
                         sh 'echo $DOCKER_PASSWORD | docker login -u $DOCKER_ID --password-stdin'
                         echo 'hier pushen we het naar de juiste dockerhub repository met een tag(zoals in de docu beschreven)'
+                        sh 'docker image ls'
                         sh 'docker push $DOCKER_ID/devops_repo:latest'    
                     }
                 }

@@ -33,6 +33,15 @@ pipeline {
                     }
                 }
             }
+
+        stage('remove images') {
+            steps {
+                script {
+                        echo 'zorg ervoor dat alles wordt opgeruimd'  
+                        sh 'docker rmi -f $(docker images -aq)'
+                    }
+                }
+            }
         }
     }
 

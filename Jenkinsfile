@@ -38,7 +38,7 @@ pipeline {
             steps {
                 script {
                         echo 'zorg ervoor dat alles wordt opgeruimd'
-                        sh 'docker rmi -f $(docker images -aq)'
+                        sh 'docker image prune -a'
                     }
                 }
             }

@@ -38,8 +38,6 @@ pipeline {
             steps {
                 script {
                         echo 'zorg ervoor dat alles wordt opgeruimd'
-                        sh 'docker stop $(docker ps -aq)' 
-                        sh 'docker rm $(docker ps -aq)' 
                         sh 'docker rmi -f $(docker images -aq)'
                     }
                 }
